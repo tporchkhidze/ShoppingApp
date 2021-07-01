@@ -1,46 +1,44 @@
-import Header from './components/Header';
-import Main from './components/Main';
-import Basket from './components/Basket';
-import data from './data';
-import { useState } from 'react';
+import { Route, Switch } from "react-router";
+
+import Profile from "./pages/profile";
+import AuthPage from "./pages/auth";
+
+import MainPage from "./pages/shopping_page/App.js"
+import Theme from "./components/theme";
+
+
+import Navigation from "./components/navigation";
+
+
+;
+
+
 function App() {
-  const { products } = data;
-  const [cartItems, setCartItems] = useState([]);
-  const onAdd = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id);
-    if (exist) {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
-        )
-      );
-    } else {
-      setCartItems([...cartItems, { ...product, qty: 1 }]);
-    }
-  };
-  const onRemove = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id);
-    if (exist.qty === 1) {
-      setCartItems(cartItems.filter((x) => x.id !== product.id));
-    } else {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
-        )
-      );
-    }
-  };
   return (
-    <div className="App">
-      <Header countCartItems={cartItems.length}></Header>
-      <div className="row">
-        <Main products={products} onAdd={onAdd}></Main>
-        <Basket
-          cartItems={cartItems}
-          onAdd={onAdd}
-          onRemove={onRemove}
-        ></Basket>
-      </div>
+    <div className="container">
+      <Navigation />
+      <hr />
+      <Theme>
+        <Switch>
+          <Route path="/profile">
+            <Profile title="Protected Page" />
+          </Route>
+
+          <Route path="/auth">
+            <AuthPage />
+          </Route>
+
+
+          <Route path="/users">
+            <MainPage />
+          </Route>
+
+
+          <Route path="/">
+            <AuthPage />
+          </Route>
+        </Switch>
+      </Theme>
     </div>
   );
 }
