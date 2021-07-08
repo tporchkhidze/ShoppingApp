@@ -17,7 +17,7 @@ const Navigation = (props) => {
          
           <li className="nav-item">
             <NavLink to="/users" className="nav-link">
-              Onile Shopping
+              Online Shopping
             </NavLink>
           </li>
          
